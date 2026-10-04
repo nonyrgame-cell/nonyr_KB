@@ -20,7 +20,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 40px 20px;
+            padding: 20px;
             font-family: 'Courier New', monospace;
         }
 
@@ -32,61 +32,84 @@
             background: #8B4513;
             background: linear-gradient(135deg, #8B4513 0%, #654321 100%);
             border-radius: 8px;
-            padding: 60px 40px 40px;
+            padding: 60px 40px 40px 40px;
             box-shadow: 
                 0 20px 60px rgba(0,0,0,0.5),
                 inset 0 2px 4px rgba(255,255,255,0.1);
         }
 
-        /* ЗАЖИМЫ ПЛАНШЕТА */
-        .clipboard::before,
-        .clipboard::after {
-            content: '';
+        /* ЗАЖИМ ПЛАНШЕТА */
+        .clip {
             position: absolute;
-            top: 20px;
+            top: 15px;
+            left: 50%;
+            transform: translateX(-50%);
             width: 80px;
-            height: 30px;
+            height: 40px;
             background: linear-gradient(180deg, #C0C0C0 0%, #808080 100%);
             border-radius: 4px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
         }
 
-        .clipboard::before { left: 50%; transform: translateX(-50%); }
-        .clipboard::after { 
-            left: 50%; 
-            transform: translateX(-50%); 
-            top: 10px;
-            width: 60px;
+        .clip::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 40px;
             height: 20px;
+            background: #606060;
+            border-radius: 2px;
         }
 
-        /* БУМАЖНЫЙ ЛИСТ */
-        .paper {
-            background: #f5f5dc;
-            background-image: 
-                repeating-linear-gradient(
-                    transparent,
-                    transparent 28px,
-                    #e0e0d0 28px,
-                    #e0e0d0 29px
-                );
+        /* КОНТЕЙНЕР СТРАНИЦ */
+        .pages-container {
+            position: relative;
+            perspective: 1500px;
+        }
+
+        /* СТРАНИЦА */
+        .page {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: #1a1a1a;
             padding: 40px;
             box-shadow: 
-                0 4px 12px rgba(0,0,0,0.2),
-                inset 0 0 40px rgba(139, 69, 19, 0.05);
+                0 4px 12px rgba(0,0,0,0.3),
+                inset 0 0 40px rgba(0,0,0,0.2);
+            transform-origin: left center;
+            transition: transform 0.6s ease-in-out;
+            backface-visibility: hidden;
+        }
+
+        .page.active {
             position: relative;
+            transform: rotateY(0deg);
+            z-index: 10;
+        }
+
+        .page.flipped {
+            transform: rotateY(-180deg);
+            z-index: 5;
+        }
+
+        .page.hidden {
+            display: none;
         }
 
         /* ТЕКСТУРА БУМАГИ */
-        .paper::before {
+        .page::before {
             content: '';
             position: absolute;
             top: 0; left: 0; right: 0; bottom: 0;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
             pointer-events: none;
         }
 
-        /* ШТАМП В УГЛУ */
+        /* ШТАМП */
         .stamp {
             position: absolute;
             top: 20px;
@@ -105,7 +128,7 @@
         /* ЗАГОЛОВОК */
         h1 {
             font-size: 24px;
-            color: #1a1a1a;
+            color: #e0e0e0;
             text-align: center;
             margin-bottom: 8px;
             text-transform: uppercase;
@@ -114,17 +137,17 @@
 
         .subtitle {
             text-align: center;
-            color: #555;
+            color: #888;
             font-size: 14px;
             margin-bottom: 30px;
-            border-bottom: 2px solid #1a1a1a;
+            border-bottom: 2px solid #444;
             padding-bottom: 20px;
         }
 
         /* РАЗДЕЛЫ */
         h2 {
             font-size: 18px;
-            color: #1a1a1a;
+            color: #e0e0e0;
             margin-top: 30px;
             margin-bottom: 15px;
             border-left: 4px solid #c0392b;
@@ -134,7 +157,7 @@
         p, li {
             font-size: 14px;
             line-height: 1.8;
-            color: #222;
+            color: #ccc;
             margin-bottom: 10px;
         }
 
@@ -156,96 +179,346 @@
         }
 
         th, td {
-            border: 1px solid #999;
+            border: 1px solid #555;
             padding: 8px 12px;
             text-align: left;
+            color: #ccc;
         }
 
         th {
-            background: #e8e8d8;
+            background: #2a2a2a;
             font-weight: bold;
+        }
+
+        tr:hover td {
+            background: #252525;
         }
 
         /* ПОДПИСЬ */
         .signature {
             margin-top: 40px;
             padding-top: 20px;
-            border-top: 1px solid #999;
+            border-top: 1px solid #555;
             display: flex;
             justify-content: space-between;
             font-size: 12px;
-            color: #555;
+            color: #888;
+        }
+
+        /* ЗАКЛАДКИ */
+        .tabs {
+            position: absolute;
+            right: -60px;
+            top: 60px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            z-index: 20;
+        }
+
+        .tab {
+            width: 60px;
+            padding: 8px 12px;
+            background: #654321;
+            color: #e0e0e0;
+            font-size: 11px;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 0 4px 4px 0;
+            box-shadow: 2px 2px 6px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+            transform: rotate(180deg);
+            white-space: nowrap;
+        }
+
+        .tab:hover {
+            background: #8B4513;
+            transform: rotate(180deg) translateX(-5px);
+        }
+
+        .tab.active {
+            background: #c0392b;
+            transform: rotate(180deg) translateX(-10px);
+        }
+
+        /* НАВИГАЦИЯ ВНИЗУ */
+        .nav-hint {
+            text-align: center;
+            margin-top: 20px;
+            color: #888;
+            font-size: 12px;
         }
 
         /* АДАПТИВНОСТЬ */
-        @media (max-width: 600px) {
+        @media (max-width: 900px) {
+            .tabs {
+                position: relative;
+                right: auto;
+                top: auto;
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: center;
+                margin-top: 20px;
+                gap: 4px;
+            }
+
+            .tab {
+                writing-mode: horizontal-tb;
+                transform: none;
+                width: auto;
+                padding: 6px 10px;
+                font-size: 10px;
+            }
+
+            .tab:hover,
+            .tab.active {
+                transform: none;
+            }
+
             .clipboard {
                 padding: 50px 20px 20px;
             }
-            .paper {
+
+            .page {
                 padding: 20px;
             }
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+
+            .clipboard {
+                padding: 40px 10px 10px;
+            }
+
+            .page {
+                padding: 15px;
+            }
+
             h1 {
                 font-size: 18px;
+            }
+
+            h2 {
+                font-size: 16px;
+            }
+
+            p, li {
+                font-size: 12px;
+            }
+
+            .stamp {
+                font-size: 10px;
+                padding: 4px 8px;
             }
         }
     </style>
 </head>
 <body>
     <div class="clipboard">
-        <div class="paper">
-            <div class="stamp">УТВЕРЖДЕНО<br>04.10.2026</div>
-            
-            <h1>Дисциплинарный устав</h1>
-            <div class="subtitle">Особого Конструкторского Бюро «nonyr»<br>Документ № ОКБ-nonyr-001</div>
+        <div class="clip"></div>
+        
+        <div class="pages-container">
+            <!-- СТРАНИЦА 1: Титул + Раздел I -->
+            <div class="page active" data-page="0">
+                <div class="stamp">УТВЕРЖДЕНО<br>04.10.2026</div>
+                
+                <h1>Дисциплинарный устав</h1>
+                <div class="subtitle">Особого Конструкторского Бюро «nonyr»<br>Документ № ОКБ-nonyr-001</div>
 
-            <h2>Раздел I. Общие положения</h2>
-            <p><strong>1.1.</strong> Канал nonyr — ядро инженерной империи. Сообщество людей, занимающихся инженерией, которые собираются вместе ради общего могущества.</p>
-            <p><strong>1.2.</strong> Цель — построение инженерной империи. Процесс не заканчивается. 1000 подписчиков — первый рубеж, не цель.</p>
+                <h2>Раздел I. Общие положения</h2>
+                <p><strong>1.1.</strong> Канал nonyr — ядро инженерной империи. Сообщество людей, занимающихся инженерией, которые собираются вместе ради общего могущества.</p>
+                <p><strong>1.2.</strong> Цель — построение инженерной империи. Процесс не заканчивается. 1000 подписчиков — первый рубеж, не цель.</p>
+                <p><strong>1.3.</strong> Дисциплина — основа производства. Без дисциплины нет ни расчёта, ни пуска, ни империи.</p>
+                <p><strong>1.4.</strong> Настоящий устав обязателен для всех участников чата и стрима.</p>
+            </div>
 
-            <h2>Раздел II. Производственная дисциплина</h2>
-            <ul>
-                <li><strong>Компетентность.</strong> Не знаешь — спроси. Не уверен — пересчитай. Ошибся — признай и исправь.</li>
-                <li><strong>Конструктивность.</strong> Критикуешь — предлагай альтернативу с обоснованием.</li>
-                <li><strong>Чёткость.</strong> Формулируй мысль. Оформляй расчёт. Указывай данные.</li>
-            </ul>
+            <!-- СТРАНИЦА 2: Раздел II -->
+            <div class="page hidden" data-page="1">
+                <h2>Раздел II. Производственная дисциплина</h2>
+                <ul>
+                    <li><strong>Компетентность.</strong> Не знаешь — спроси. Не уверен — пересчитай. Ошибся — признай и исправь.</li>
+                    <li><strong>Конструктивность.</strong> Критикуешь — предлагай альтернативу с обоснованием. «Всё плохо» без решения — нарушение.</li>
+                    <li><strong>Чёткость.</strong> Формулируй мысль. Оформляй расчёт. Указывай данные, на которые опираешься.</li>
+                    <li><strong>Ответственность.</strong> Сказал — сделай. Взял задачу — доведи до конца. Не можешь — предупреди заранее.</li>
+                </ul>
+            </div>
 
-            <h2>Раздел III. Запрещено</h2>
-            <table>
-                <tr>
-                    <th>Код</th>
-                    <th>Нарушение</th>
-                    <th>Санкция</th>
-                </tr>
-                <tr>
-                    <td>З-01</td>
-                    <td>Оскорбления, переход на личности</td>
-                    <td>Мут/Бан</td>
-                </tr>
-                <tr>
-                    <td>З-02</td>
-                    <td>Спам, флуд, провокации</td>
-                    <td>Мут</td>
-                </tr>
-                <tr>
-                    <td>З-04</td>
-                    <td>Саботаж (срыв стрима/испытания)</td>
-                    <td>Бан</td>
-                </tr>
-            </table>
+            <!-- СТРАНИЦА 3: Раздел III -->
+            <div class="page hidden" data-page="2">
+                <h2>Раздел III. Запрещено</h2>
+                <table>
+                    <tr>
+                        <th>Код</th>
+                        <th>Нарушение</th>
+                        <th>Санкция</th>
+                    </tr>
+                    <tr>
+                        <td>З-01</td>
+                        <td>Оскорбления, переход на личности</td>
+                        <td>Мут/Бан</td>
+                    </tr>
+                    <tr>
+                        <td>З-02</td>
+                        <td>Спам, флуд, провокации</td>
+                        <td>Мут</td>
+                    </tr>
+                    <tr>
+                        <td>З-03</td>
+                        <td>Публикация заведомо ложных данных</td>
+                        <td>Предупреждение</td>
+                    </tr>
+                    <tr>
+                        <td>З-04</td>
+                        <td>Саботаж (срыв стрима/испытания)</td>
+                        <td>Бан</td>
+                    </tr>
+                    <tr>
+                        <td>З-05</td>
+                        <td>Реклама без согласования</td>
+                        <td>Предупреждение</td>
+                    </tr>
+                    <tr>
+                        <td>З-06</td>
+                        <td>Политика/религия вне производства</td>
+                        <td>Предупреждение</td>
+                    </tr>
+                </table>
+            </div>
 
-            <h2>Раздел IV. Санкции</h2>
-            <ul>
-                <li>Нарушение №1 → Предупреждение</li>
-                <li>Нарушение №2 → Мут (24ч)</li>
-                <li>Нарушение №3 → Бан (бессрочно)</li>
-            </ul>
+            <!-- СТРАНИЦА 4: Раздел IV -->
+            <div class="page hidden" data-page="3">
+                <h2>Раздел IV. Санкции</h2>
+                <ul>
+                    <li><strong>Нарушение №1</strong> → Предупреждение (фиксация в журнале)</li>
+                    <li><strong>Нарушение №2</strong> → Мут (временное отстранение, 24ч)</li>
+                    <li><strong>Нарушение №3</strong> → Бан (бессрочное отстранение)</li>
+                    <li><strong>Особо злостный саботаж</strong> → Бан без предупреждения</li>
+                </ul>
+                <p>Решение о санкциях принимает модератор. Окончательное — Главный Конструктор.</p>
+            </div>
 
-            <div class="signature">
-                <div>Главный Конструктор: ___________ /nonyr/</div>
-                <div>Дата: 04.10.2026</div>
+            <!-- СТРАНИЦА 5: Разделы V-VI -->
+            <div class="page hidden" data-page="4">
+                <h2>Раздел V. Обязанности участников</h2>
+                <ul>
+                    <li>Соблюдать настоящий устав</li>
+                    <li>Уважать чужой труд: крафты, расчёты, мнения</li>
+                    <li>Помогать новичкам: объяснять, подсказывать, направлять</li>
+                    <li>Фиксировать результаты: удачи и аварии — в журнал</li>
+                    <li>Участвовать в разборах: анализ — часть производства</li>
+                </ul>
+
+                <h2>Раздел VI. Права участников</h2>
+                <ul>
+                    <li>Задавать вопросы</li>
+                    <li>Предлагать решения</li>
+                    <li>Спорить с аргументами</li>
+                    <li>Показывать свои крафты</li>
+                    <li>Ошибаться</li>
+                    <li>Расслабиться и общаться — вне производственной необходимости</li>
+                </ul>
+            </div>
+
+            <!-- СТРАНИЦА 6: Разделы VII-VIII -->
+            <div class="page hidden" data-page="5">
+                <h2>Раздел VII. Роль Главного Конструктора</h2>
+                <ul>
+                    <li>Принимает окончательное решение по пуску</li>
+                    <li>Несёт ответственность за результат</li>
+                    <li>Выслушивает чат. Решает — сам</li>
+                    <li>Решение не обсуждается в момент пуска. Обсуждается после — в разборе</li>
+                    <li>Главный Конструктор подчиняется уставу. Не наоборот</li>
+                </ul>
+
+                <h2>Раздел VIII. Модерация</h2>
+                <ul>
+                    <li>Модератор — служба безопасности предприятия</li>
+                    <li>Модератор следит за соблюдением устава</li>
+                    <li>Модератор имеет право на предупреждение, мут, бан</li>
+                    <li>Модератор подчиняется Главному Конструктору</li>
+                    <li>Действия модератора можно обжаловать у Главного Конструктора</li>
+                </ul>
+            </div>
+
+            <!-- СТРАНИЦА 7: Разделы IX-X -->
+            <div class="page hidden" data-page="6">
+                <h2>Раздел IX. Разборы и журнал</h2>
+                <ul>
+                    <li>После каждой смены — короткий разбор: что делали, что вышло, что нет, почему</li>
+                    <li>Результаты — в журнал: дата, задача, результат, вывод</li>
+                    <li>Журнал — общий. Доступен всем участникам</li>
+                    <li>Авария — не повод для паники. Повод для записи в журнал</li>
+                </ul>
+
+                <h2>Раздел X. Изменения устава</h2>
+                <ul>
+                    <li>Устав может быть изменён Главным Конструктором</li>
+                    <li>Предложения по изменению принимаются от участников</li>
+                    <li>Изменения вступают в силу с момента публикации</li>
+                    <li>Устав не противоречит ТЗ. ТЗ первично</li>
+                </ul>
+            </div>
+
+            <!-- СТРАНИЦА 8: Приложение -->
+            <div class="page hidden" data-page="7">
+                <h2>Приложение. Формулировки для закрепа</h2>
+                <ol>
+                    <li>Инженерия — это дисциплина, а не талант</li>
+                    <li>Ошибка — это данные. Записываем, разбираем, строим заново</li>
+                    <li>Знание, которым поделились, — живёт</li>
+                    <li>Мы собираемся ради нашего же могущества</li>
+                    <li>Критикуешь — предлагай. Не можешь предложить — слушай</li>
+                    <li>Дисциплина — основа производства</li>
+                    <li>Империя не имеет финальной метрики</li>
+                </ol>
+
+                <div class="signature">
+                    <div>Главный Конструктор: ___________ /nonyr/</div>
+                    <div>Дата: 04.10.2026</div>
+                </div>
             </div>
         </div>
+
+        <!-- ЗАКЛАДКИ -->
+        <div class="tabs">
+            <div class="tab active" onclick="flipToPage(0)">I. Общие</div>
+            <div class="tab" onclick="flipToPage(1)">II. Дисциплина</div>
+            <div class="tab" onclick="flipToPage(2)">III. Запреты</div>
+            <div class="tab" onclick="flipToPage(3)">IV. Санкции</div>
+            <div class="tab" onclick="flipToPage(4)">V-VI. Права</div>
+            <div class="tab" onclick="flipToPage(5)">VII-VIII. Власть</div>
+            <div class="tab" onclick="flipToPage(6)">IX-X. Журнал</div>
+            <div class="tab" onclick="flipToPage(7)">Приложение</div>
+        </div>
+
+        <div class="nav-hint">Кликни по закладке справа →</div>
     </div>
+
+    <script>
+        let currentPage = 0;
+        const pages = document.querySelectorAll('.page');
+        const tabs = document.querySelectorAll('.tab');
+
+        function flipToPage(pageNum) {
+            if (pageNum === currentPage) return;
+
+            // Скрываем текущую страницу
+            pages[currentPage].classList.remove('active');
+            pages[currentPage].classList.add('hidden');
+            tabs[currentPage].classList.remove('active');
+
+            // Показываем новую страницу
+            pages[pageNum].classList.remove('hidden');
+            pages[pageNum].classList.add('active');
+            tabs[pageNum].classList.add('active');
+
+            currentPage = pageNum;
+        }
+    </script>
 </body>
 </html>
