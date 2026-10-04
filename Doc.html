@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Дисциплинарный устав ОКБ nonyr</title>
+    <style>
+        /* Базовые настройки и шрифты */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #121212;
+            color: #e0e0e0;
+            font-family: 'Courier New', Courier, monospace; /* Инженерный стиль */
+            line-height: 1.6;
+            padding: 40px 20px;
+        }
+
+        /* Контейнер документа (лист бумаги) */
+        .document {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 4px;
+            padding: 60px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            position: relative;
+        }
+
+        /* Штамп утверждения */
+        .stamp {
+            position: absolute;
+            top: 40px;
+            right: 40px;
+            border: 3px solid #c0392b;
+            color: #c0392b;
+            padding: 10px 15px;
+            font-size: 14px;
+            font-weight: bold;
+            transform: rotate(-10deg);
+            opacity: 0.8;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-align: center;
+        }
+
+        /* Заголовки */
+        h1 {
+            font-size: 28px;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+            color: #ffffff;
+            border-bottom: 2px solid #c0392b;
+            padding-bottom: 20px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #888;
+            font-size: 14px;
+            margin-bottom: 50px;
+        }
+
+        /* Оглавление */
+        .toc {
+            background: #222;
+            border-left: 4px solid #c0392b;
+            padding: 20px 30px;
+            margin-bottom: 40px;
+        }
+
+        .toc h3 {
+            margin-bottom: 15px;
+            color: #fff;
+            text-transform: uppercase;
+            font-size: 16px;
+        }
+
+        .toc ul {
+            list-style: none;
+        }
+
+        .toc li {
+            margin-bottom: 8px;
+        }
+
+        .toc a {
+            color: #888;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .toc a:hover {
+            color: #c0392b;
+            text-decoration: underline;
+        }
+
+        /* Разделы */
+        section {
+            margin-bottom: 40px;
+            scroll-margin-top: 20px; /* Отступ при прокрутке по якорю */
+        }
+
+        h2 {
+            font-size: 20px;
+            color: #ffffff;
+            border-left: 4px solid #c0392b;
+            padding-left: 15px;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+
+        p, li {
+            font-size: 15px;
+            color: #ccc;
+            margin-bottom: 12px;
+        }
+
+        ul, ol {
+            margin-left: 25px;
+            margin-bottom: 20px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        strong {
+            color: #ffffff;
+        }
+
+        /* Таблица нарушений */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 14px;
+        }
+
+        th, td {
+            border: 1px solid #444;
+            padding: 12px 15px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #252525;
+            color: #fff;
+            font-weight: bold;
+        }
+
+        tr:nth-child(even) {
+            background-color: #1f1f1f;
+        }
+
+        /* Подпись */
+        .signature {
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid #444;
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+            color: #888;
+        }
+
+        /* Выделение текста (для копирования правил) */
+        ::selection {
+            background: #c0392b;
+            color: #fff;
+        }
+
+        /* Адаптивность для мобильных */
+        @media (max-width: 600px) {
+            .document {
+                padding: 30px 20px;
+            }
+            .stamp {
+                position: relative;
+                top: 0;
+                right: 0;
+                transform: rotate(0);
+                display: inline-block;
+                margin-bottom: 20px;
+            }
+            h1 {
+                font-size: 22px;
+            }
+            h2 {
+                font-size: 18px;
+            }
+            table {
+                font-size: 12px;
+            }
+            th, td {
+                padding: 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="document">
+        <div class="stamp">УТВЕРЖДЕНО<br>04.10.2026</div>
+        
+        <h1>Дисциплинарный устав</h1>
+        <div class="subtitle">Особого Конструкторского Бюро «nonyr»<br>Документ № ОКБ-nonyr-001</div>
+
+        <!-- Оглавление для быстрой навигации и ссылок -->
+        <div class="toc">
+            <h3>Оглавление</h3>
+            <ul>
+                <li><a href="#section-1">I. Общие положения</a></li>
+                <li><a href="#section-2">II. Производственная дисциплина</a></li>
+                <li><a href="#section-3">III. Запрещено (Таблица нарушений)</a></li>
+                <li><a href="#section-4">IV. Санкции</a></li>
+                <li><a href="#section-5">V-VI. Обязанности и права участников</a></li>
+                <li><a href="#section-6">VII-VIII. Роль ГК и Модерация</a></li>
+                <li><a href="#section-7">IX-X. Разборы и изменения устава</a></li>
+            </ul>
+        </div>
+
+        <section id="section-1">
+            <h2>I. Общие положения</h2>
+            <p><strong>1.1.</strong> Канал nonyr — ядро инженерной империи. Сообщество людей, увлекающихся инженерией, которые собираются вместе ради могущества империи.</p>
+            <p><strong>1.2.</strong> Цель — построение инженерной империи. Процесс бесконечный. 1000 подписчиков — первый рубеж.</p>
+            <p><strong>1.3.</strong> Дисциплина — основа производства. Без дисциплины нет ни расчёта, ни пуска, ни империи.</p>
+            <p><strong>1.4.</strong> Настоящий устав обязателен для всех участников без исключений.</p>
+        </section>
+
+        <section id="section-2">
+            <h2>II. Производственная дисциплина</h2>
+            <ul>
+                <li><strong>Компетентность:</strong> Не знаешь — спроси. Не уверен — пересчитай. Ошибся — признай.</li>
+                <li><strong>Конструктивность:</strong> Критикуешь — предлагай альтернативу с обоснованием.</li>
+                <li><strong>Чёткость:</strong> Формулируй мысль. Оформляй расчёт. Указывай данные, на которые опираешься.</li>
+                <li><strong>Ответственность:</strong> Сказал — сделай. Взял задачу — доведи до конца. Не можешь — предупреди заранее.</li>
+            </ul>
+        </section>
+
+        <section id="section-3">
+            <h2>III. Запрещено</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Код</th>
+                        <th>Нарушение</th>
+                        <th>Первичная санкция</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>П-01</strong></td>
+                        <td>Оскорбления, переход на личности</td>
+                        <td>Мут / Бан</td>
+                    </tr>
+                    <tr>
+                        <td><strong>П-02</strong></td>
+                        <td>Спам, флуд, провокации</td>
+                        <td>Мут</td>
+                    </tr>
+                    <tr>
+                        <td><strong>П-03</strong></td>
+                        <td>Публикация заведомо ложных данных</td>
+                        <td>Предупреждение</td>
+                    </tr>
+                    <tr>
+                        <td><strong>П-04</strong></td>
+                        <td>Саботаж (срыв стрима/испытания)</td>
+                        <td>Бан</td>
+                    </tr>
+                    <tr>
+                        <td><strong>П-05</strong></td>
+                        <td>Реклама без согласования</td>
+                        <td>Предупреждение</td>
+                    </tr>
+                    <tr>
+                        <td><strong>П-06</strong></td>
+                        <td>Политика/религия вне производства</td>
+                        <td>Предупреждение</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section id="section-4">
+            <h2>IV. Санкции</h2>
+            <ul>
+                <li><strong>Нарушение №1</strong> → Предупреждение (Мут от 10 сек.)</li>
+                <li><strong>Нарушение №2</strong> → Мут (временное отстранение, до 24 ч.)</li>
+                <li><strong>Нарушение №3</strong> → Бан (бессрочное отстранение)</li>
+                <li><strong>Особо злостный саботаж</strong> → Мгновенный бан с последующим разбирательством</li>
+            </ul>
+            <p><em>Решение о санкциях принимает модератор. Окончательное решение — за Главным Конструктором.</em></p>
+        </section>
+
+        <section id="section-5">
+            <h2>V-VI. Обязанности и права участников</h2>
+            <p><strong>Обязанности:</strong></p>
+            <ul>
+                <li>Соблюдать настоящий устав.</li>
+                <li>Уважать чужой труд: крафты, расчёты, мнения.</li>
+                <li>Помогать новичкам: объяснять, подсказывать, направлять.</li>
+            </ul>
+            <p><strong>Права:</strong></p>
+            <ul>
+                <li>Задавать вопросы и предлагать решения.</li>
+                <li>Фиксировать результаты и участвовать в разборах.</li>
+                <li>Спорить, опираясь на аргументы и данные.</li>
+                <li>Показывать свои крафты и иметь право на ошибку.</li>
+                <li>Расслабиться и общаться вне производственной необходимости (в отведенных зонах).</li>
+            </ul>
+        </section>
+
+        <section id="section-6">
+            <h2>VII-VIII. Роль Главного Конструктора и Модерация</h2>
+            <p><strong>Главный Конструктор (ГК):</strong></p>
+            <ul>
+                <li>Принимает окончательное решение.</li>
+                <li>Несёт ответственность за результат.</li>
+                <li>Решение не обсуждается в момент пуска. Обсуждение — только в разборе.</li>
+                <li>ГК подчиняется уставу.</li>
+            </ul>
+            <p><strong>Модерация (Служба безопасности):</strong></p>
+            <ul>
+                <li>Следит за соблюдением устава.</li>
+                <li>Имеет право на предупреждение, мут, бан.</li>
+                <li>Подчиняется ГК. Действия модератора можно обжаловать у ГК.</li>
+            </ul>
+        </section>
+
+        <section id="section-7">
+            <h2>IX-X. Разборы и изменения устава</h2>
+            <ul>
+                <li><strong>IX. Разборы:</strong> После каждой смены — короткий разбор: что делали, что вышло, что нет, почему. Авария — не повод для паники, повод для записи в журнал. (Временно недействителен).</li>
+                <li><strong>X. Изменения:</strong> Устав может быть изменён ГК. Предложения принимаются от участников. Изменения вступают в силу с момента публикации. Устав не противоречит ТЗ.</li>
+            </ul>
+        </section>
+
+        <div class="signature">
+            <div>Главный Конструктор: ___________ /nonyr/</div>
+            <div>Дата: 04.10.2026</div>
+        </div>
+    </div>
+
+</body>
+</html>
