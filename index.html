@@ -142,57 +142,56 @@
             border-radius: 4px;
         }
 
-        /* ЗАКЛАДКИ (торчат из страниц) */
+        /* ЗАКЛАДКИ (вертикальные, торчат справа) */
         .page-tabs {
             position: absolute;
-            right: -65px;
-            top: 0;
+            right: -45px;
+            top: 20px;
             display: flex;
             flex-direction: column;
-            gap: 4px;
+            gap: 8px;
             z-index: 20;
         }
 
         .page-tab {
-            width: 65px;
-            height: 40px;
+            width: 45px;
+            height: 80px;
             background: #1a1a1a;
             color: #888;
-            font-size: 10px;
+            font-size: 11px;
             font-weight: bold;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 5px;
+            padding: 8px 4px;
             transition: all 0.3s ease;
             box-shadow: 
-                3px 3px 8px rgba(0,0,0,0.5),
+                4px 4px 10px rgba(0,0,0,0.5),
                 inset 0 1px 2px rgba(255,255,255,0.1);
-            border-radius: 0 4px 4px 0;
-            /* Переворот на 180 градусов */
-            transform: scaleX(-1);
+            border-radius: 0 8px 8px 0;
         }
 
         .page-tab:hover {
             background: #2a2a2a;
             color: #e0e0e0;
-            transform: scaleX(-1) translateX(5px);
+            transform: translateX(5px);
         }
 
         .page-tab.active {
             background: #c0392b;
             color: #fff;
             box-shadow: 
-                4px 4px 12px rgba(192, 57, 43, 0.6),
+                5px 5px 15px rgba(192, 57, 43, 0.6),
                 inset 0 1px 2px rgba(255,255,255,0.3);
-            transform: scaleX(-1) translateX(8px);
+            transform: translateX(8px);
         }
 
         .page-tab-text {
-            /* Обратный переворот текста, чтобы читался нормально */
-            transform: scaleX(-1);
-            letter-spacing: 0.5px;
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+            transform: rotate(180deg);
+            letter-spacing: 1px;
         }
 
         /* ШТАМП */
@@ -318,7 +317,6 @@
             }
 
             .page-tab {
-                transform: none;
                 width: auto;
                 height: 35px;
                 padding: 8px 12px;
@@ -334,6 +332,7 @@
             }
 
             .page-tab-text {
+                writing-mode: horizontal-tb;
                 transform: none;
             }
 
