@@ -37,6 +37,9 @@
                 0 10px 30px rgba(0,0,0,0.4),
                 inset 0 2px 4px rgba(255,255,255,0.15),
                 inset 0 -2px 4px rgba(0,0,0,0.3);
+            /* Минимальная высота = все закладки + отступы */
+            /* 8 закладок × 80px + 7 gap × 8px + 20px top + 70px padding-top + 50px padding-bottom */
+            min-height: calc(8 * 80px + 7 * 8px + 20px + 70px + 50px);
         }
 
         /* Текстура дерева */
@@ -102,34 +105,29 @@
         /* КОНТЕЙНЕР СТРАНИЦ */
         .pages-container {
             position: relative;
-            min-height: 500px;
         }
 
-        /* СТРАНИЦА */
+        /* СТРАНИЦА — теперь в нормальном flow */
         .page {
-            position: absolute;
-            top: 0;
-            left: 0;
+            display: none;
+            position: relative;
             width: 100%;
-            min-height: 500px;
             background: #1a1a1a;
             padding: 50px;
             box-shadow: 
                 0 4px 16px rgba(0,0,0,0.4),
                 inset 0 0 60px rgba(0,0,0,0.3);
             border-radius: 4px;
-            transition: opacity 0.4s ease;
+            animation: fadeIn 0.4s ease;
         }
 
         .page.active {
-            opacity: 1;
-            z-index: 10;
+            display: block;
         }
 
-        .page.hidden {
-            opacity: 0;
-            z-index: 1;
-            pointer-events: none;
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
 
         /* ТЕКСТУРА БУМАГИ */
@@ -170,7 +168,6 @@
                 4px 4px 10px rgba(0,0,0,0.5),
                 inset 0 1px 2px rgba(255,255,255,0.1);
             border-radius: 0 8px 8px 0;
-            transform: translateX(0);
         }
 
         .page-tab:hover {
@@ -241,6 +238,10 @@
             text-shadow: 0 1px 2px rgba(0,0,0,0.5);
         }
 
+        h2:first-of-type {
+            margin-top: 0;
+        }
+
         p, li {
             font-size: 15px;
             line-height: 1.9;
@@ -304,6 +305,11 @@
 
         /* АДАПТИВНОСТЬ */
         @media (max-width: 900px) {
+            .clipboard {
+                min-height: auto;
+                padding: 60px 30px 30px;
+            }
+
             .page-tabs {
                 position: relative;
                 right: auto;
@@ -335,10 +341,6 @@
                 transform: none;
             }
 
-            .clipboard {
-                padding: 60px 30px 30px;
-            }
-
             .page {
                 padding: 30px;
             }
@@ -355,7 +357,6 @@
 
             .page {
                 padding: 20px;
-                min-height: 400px;
             }
 
             h1 {
@@ -417,7 +418,7 @@
             </div>
 
             <!-- СТРАНИЦА 2: Раздел II -->
-            <div class="page hidden" data-page="1">
+            <div class="page" data-page="1">
                 <div class="page-tabs">
                     <div class="page-tab" onclick="flipToPage(0)"><span class="page-tab-text">I. Общие</span></div>
                     <div class="page-tab active" onclick="flipToPage(1)"><span class="page-tab-text">II. Дисциплина</span></div>
@@ -439,7 +440,7 @@
             </div>
 
             <!-- СТРАНИЦА 3: Раздел III -->
-            <div class="page hidden" data-page="2">
+            <div class="page" data-page="2">
                 <div class="page-tabs">
                     <div class="page-tab" onclick="flipToPage(0)"><span class="page-tab-text">I. Общие</span></div>
                     <div class="page-tab" onclick="flipToPage(1)"><span class="page-tab-text">II. Дисциплина</span></div>
@@ -492,7 +493,7 @@
             </div>
 
             <!-- СТРАНИЦА 4: Раздел IV -->
-            <div class="page hidden" data-page="3">
+            <div class="page" data-page="3">
                 <div class="page-tabs">
                     <div class="page-tab" onclick="flipToPage(0)"><span class="page-tab-text">I. Общие</span></div>
                     <div class="page-tab" onclick="flipToPage(1)"><span class="page-tab-text">II. Дисциплина</span></div>
@@ -515,7 +516,7 @@
             </div>
 
             <!-- СТРАНИЦА 5: Разделы V-VI -->
-            <div class="page hidden" data-page="4">
+            <div class="page" data-page="4">
                 <div class="page-tabs">
                     <div class="page-tab" onclick="flipToPage(0)"><span class="page-tab-text">I. Общие</span></div>
                     <div class="page-tab" onclick="flipToPage(1)"><span class="page-tab-text">II. Дисциплина</span></div>
@@ -548,7 +549,7 @@
             </div>
 
             <!-- СТРАНИЦА 6: Разделы VII-VIII -->
-            <div class="page hidden" data-page="5">
+            <div class="page" data-page="5">
                 <div class="page-tabs">
                     <div class="page-tab" onclick="flipToPage(0)"><span class="page-tab-text">I. Общие</span></div>
                     <div class="page-tab" onclick="flipToPage(1)"><span class="page-tab-text">II. Дисциплина</span></div>
@@ -580,7 +581,7 @@
             </div>
 
             <!-- СТРАНИЦА 7: Разделы IX-X -->
-            <div class="page hidden" data-page="6">
+            <div class="page" data-page="6">
                 <div class="page-tabs">
                     <div class="page-tab" onclick="flipToPage(0)"><span class="page-tab-text">I. Общие</span></div>
                     <div class="page-tab" onclick="flipToPage(1)"><span class="page-tab-text">II. Дисциплина</span></div>
@@ -610,7 +611,7 @@
             </div>
 
             <!-- СТРАНИЦА 8: Приложение -->
-            <div class="page hidden" data-page="7">
+            <div class="page" data-page="7">
                 <div class="page-tabs">
                     <div class="page-tab" onclick="flipToPage(0)"><span class="page-tab-text">I. Общие</span></div>
                     <div class="page-tab" onclick="flipToPage(1)"><span class="page-tab-text">II. Дисциплина</span></div>
@@ -651,9 +652,6 @@
             if (pageNum === currentPage) return;
 
             pages[currentPage].classList.remove('active');
-            pages[currentPage].classList.add('hidden');
-
-            pages[pageNum].classList.remove('hidden');
             pages[pageNum].classList.add('active');
 
             currentPage = pageNum;
