@@ -165,26 +165,25 @@
             align-items: center;
             justify-content: center;
             padding: 8px 4px;
-            transition: all 0.3s ease;
+            transition: transform 0.3s ease;
             box-shadow: 
                 4px 4px 10px rgba(0,0,0,0.5),
                 inset 0 1px 2px rgba(255,255,255,0.1);
             border-radius: 0 8px 8px 0;
+            transform: translateX(0);
         }
 
         .page-tab:hover {
-            background: #2a2a2a;
-            color: #e0e0e0;
             transform: translateX(5px);
         }
 
         .page-tab.active {
-            background: #c0392b;
-            color: #fff;
+            background: #1a1a1a;
+            color: #e0e0e0;
+            transform: translateX(12px);
             box-shadow: 
-                5px 5px 15px rgba(192, 57, 43, 0.6),
-                inset 0 1px 2px rgba(255,255,255,0.3);
-            transform: translateX(8px);
+                6px 6px 12px rgba(0,0,0,0.6),
+                inset 0 1px 2px rgba(255,255,255,0.15);
         }
 
         .page-tab-text {
