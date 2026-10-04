@@ -20,7 +20,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 40px 80px 40px 40px;
+            padding: 40px 20px;
             font-family: 'Courier New', monospace;
         }
 
@@ -142,6 +142,59 @@
             border-radius: 4px;
         }
 
+        /* ЗАКЛАДКИ (торчат из страниц) */
+        .page-tabs {
+            position: absolute;
+            right: -65px;
+            top: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            z-index: 20;
+        }
+
+        .page-tab {
+            width: 65px;
+            height: 40px;
+            background: #1a1a1a;
+            color: #888;
+            font-size: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 5px;
+            transition: all 0.3s ease;
+            box-shadow: 
+                3px 3px 8px rgba(0,0,0,0.5),
+                inset 0 1px 2px rgba(255,255,255,0.1);
+            border-radius: 0 4px 4px 0;
+            /* Переворот на 180 градусов */
+            transform: scaleX(-1);
+        }
+
+        .page-tab:hover {
+            background: #2a2a2a;
+            color: #e0e0e0;
+            transform: scaleX(-1) translateX(5px);
+        }
+
+        .page-tab.active {
+            background: #c0392b;
+            color: #fff;
+            box-shadow: 
+                4px 4px 12px rgba(192, 57, 43, 0.6),
+                inset 0 1px 2px rgba(255,255,255,0.3);
+            transform: scaleX(-1) translateX(8px);
+        }
+
+        .page-tab-text {
+            /* Обратный переворот текста, чтобы читался нормально */
+            transform: scaleX(-1);
+            letter-spacing: 0.5px;
+        }
+
         /* ШТАМП */
         .stamp {
             position: absolute;
@@ -242,62 +295,6 @@
             color: #888;
         }
 
-        /* ЗАКЛАДКИ */
-        .tabs {
-            position: absolute;
-            right: -70px;
-            top: 80px;
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-            z-index: 50;
-        }
-
-        .tab {
-            position: relative;
-            width: 70px;
-            height: 45px;
-            background: linear-gradient(90deg, #654321 0%, #8B4513 100%);
-            color: #e0e0e0;
-            font-size: 10px;
-            font-weight: bold;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding: 5px;
-            transition: all 0.3s ease;
-            box-shadow: 
-                3px 3px 8px rgba(0,0,0,0.4),
-                inset 0 1px 2px rgba(255,255,255,0.2);
-            clip-path: polygon(0 0, 100% 0, 100% 100%, 15% 100%, 0 85%);
-        }
-
-        .tab:hover {
-            background: linear-gradient(90deg, #8B4513 0%, #A0522D 100%);
-            transform: translateX(-8px);
-            box-shadow: 
-                5px 5px 12px rgba(0,0,0,0.5),
-                inset 0 1px 2px rgba(255,255,255,0.3);
-        }
-
-        .tab.active {
-            background: linear-gradient(90deg, #c0392b 0%, #e74c3c 100%);
-            transform: translateX(-15px);
-            box-shadow: 
-                6px 6px 15px rgba(192, 57, 43, 0.5),
-                inset 0 1px 2px rgba(255,255,255,0.4);
-            color: #fff;
-        }
-
-        .tab-text {
-            writing-mode: vertical-rl;
-            text-orientation: mixed;
-            transform: rotate(180deg);
-            letter-spacing: 1px;
-        }
-
         /* НАВИГАЦИЯ ВНИЗУ */
         .nav-hint {
             text-align: center;
@@ -308,38 +305,36 @@
         }
 
         /* АДАПТИВНОСТЬ */
-        @media (max-width: 1000px) {
-            body {
-                padding: 20px;
-            }
-
-            .tabs {
+        @media (max-width: 900px) {
+            .page-tabs {
                 position: relative;
                 right: auto;
                 top: auto;
                 flex-direction: row;
                 flex-wrap: wrap;
                 justify-content: center;
-                margin-top: 30px;
-                gap: 8px;
+                margin-top: 20px;
+                gap: 6px;
             }
 
-            .tab {
+            .page-tab {
+                transform: none;
                 width: auto;
                 height: 35px;
                 padding: 8px 12px;
-                clip-path: none;
                 border-radius: 4px;
             }
 
-            .tab-text {
-                writing-mode: horizontal-tb;
-                transform: none;
+            .page-tab:hover {
+                transform: translateY(-3px);
             }
 
-            .tab:hover,
-            .tab.active {
+            .page-tab.active {
                 transform: translateY(-3px);
+            }
+
+            .page-tab-text {
+                transform: none;
             }
 
             .clipboard {
@@ -385,7 +380,7 @@
                 right: 15px;
             }
 
-            .tab {
+            .page-tab {
                 height: 30px;
                 font-size: 9px;
                 padding: 6px 8px;
@@ -400,6 +395,17 @@
         <div class="pages-container">
             <!-- СТРАНИЦА 1: Титул + Раздел I -->
             <div class="page active" data-page="0">
+                <div class="page-tabs">
+                    <div class="page-tab active" onclick="flipToPage(0)"><span class="page-tab-text">I. Общие</span></div>
+                    <div class="page-tab" onclick="flipToPage(1)"><span class="page-tab-text">II. Дисциплина</span></div>
+                    <div class="page-tab" onclick="flipToPage(2)"><span class="page-tab-text">III. Запреты</span></div>
+                    <div class="page-tab" onclick="flipToPage(3)"><span class="page-tab-text">IV. Санкции</span></div>
+                    <div class="page-tab" onclick="flipToPage(4)"><span class="page-tab-text">V-VI. Права</span></div>
+                    <div class="page-tab" onclick="flipToPage(5)"><span class="page-tab-text">VII-VIII. Власть</span></div>
+                    <div class="page-tab" onclick="flipToPage(6)"><span class="page-tab-text">IX-X. Журнал</span></div>
+                    <div class="page-tab" onclick="flipToPage(7)"><span class="page-tab-text">Приложение</span></div>
+                </div>
+
                 <div class="stamp">УТВЕРЖДЕНО<br>04.10.2026</div>
                 
                 <h1>Дисциплинарный устав</h1>
@@ -414,6 +420,17 @@
 
             <!-- СТРАНИЦА 2: Раздел II -->
             <div class="page hidden" data-page="1">
+                <div class="page-tabs">
+                    <div class="page-tab" onclick="flipToPage(0)"><span class="page-tab-text">I. Общие</span></div>
+                    <div class="page-tab active" onclick="flipToPage(1)"><span class="page-tab-text">II. Дисциплина</span></div>
+                    <div class="page-tab" onclick="flipToPage(2)"><span class="page-tab-text">III. Запреты</span></div>
+                    <div class="page-tab" onclick="flipToPage(3)"><span class="page-tab-text">IV. Санкции</span></div>
+                    <div class="page-tab" onclick="flipToPage(4)"><span class="page-tab-text">V-VI. Права</span></div>
+                    <div class="page-tab" onclick="flipToPage(5)"><span class="page-tab-text">VII-VIII. Власть</span></div>
+                    <div class="page-tab" onclick="flipToPage(6)"><span class="page-tab-text">IX-X. Журнал</span></div>
+                    <div class="page-tab" onclick="flipToPage(7)"><span class="page-tab-text">Приложение</span></div>
+                </div>
+
                 <h2>Раздел II. Производственная дисциплина</h2>
                 <ul>
                     <li><strong>Компетентность.</strong> Не знаешь — спроси. Не уверен — пересчитай. Ошибся — признай и исправь.</li>
@@ -425,6 +442,17 @@
 
             <!-- СТРАНИЦА 3: Раздел III -->
             <div class="page hidden" data-page="2">
+                <div class="page-tabs">
+                    <div class="page-tab" onclick="flipToPage(0)"><span class="page-tab-text">I. Общие</span></div>
+                    <div class="page-tab" onclick="flipToPage(1)"><span class="page-tab-text">II. Дисциплина</span></div>
+                    <div class="page-tab active" onclick="flipToPage(2)"><span class="page-tab-text">III. Запреты</span></div>
+                    <div class="page-tab" onclick="flipToPage(3)"><span class="page-tab-text">IV. Санкции</span></div>
+                    <div class="page-tab" onclick="flipToPage(4)"><span class="page-tab-text">V-VI. Права</span></div>
+                    <div class="page-tab" onclick="flipToPage(5)"><span class="page-tab-text">VII-VIII. Власть</span></div>
+                    <div class="page-tab" onclick="flipToPage(6)"><span class="page-tab-text">IX-X. Журнал</span></div>
+                    <div class="page-tab" onclick="flipToPage(7)"><span class="page-tab-text">Приложение</span></div>
+                </div>
+
                 <h2>Раздел III. Запрещено</h2>
                 <table>
                     <tr>
@@ -467,6 +495,17 @@
 
             <!-- СТРАНИЦА 4: Раздел IV -->
             <div class="page hidden" data-page="3">
+                <div class="page-tabs">
+                    <div class="page-tab" onclick="flipToPage(0)"><span class="page-tab-text">I. Общие</span></div>
+                    <div class="page-tab" onclick="flipToPage(1)"><span class="page-tab-text">II. Дисциплина</span></div>
+                    <div class="page-tab" onclick="flipToPage(2)"><span class="page-tab-text">III. Запреты</span></div>
+                    <div class="page-tab active" onclick="flipToPage(3)"><span class="page-tab-text">IV. Санкции</span></div>
+                    <div class="page-tab" onclick="flipToPage(4)"><span class="page-tab-text">V-VI. Права</span></div>
+                    <div class="page-tab" onclick="flipToPage(5)"><span class="page-tab-text">VII-VIII. Власть</span></div>
+                    <div class="page-tab" onclick="flipToPage(6)"><span class="page-tab-text">IX-X. Журнал</span></div>
+                    <div class="page-tab" onclick="flipToPage(7)"><span class="page-tab-text">Приложение</span></div>
+                </div>
+
                 <h2>Раздел IV. Санкции</h2>
                 <ul>
                     <li><strong>Нарушение №1</strong> → Предупреждение (фиксация в журнале)</li>
@@ -479,6 +518,17 @@
 
             <!-- СТРАНИЦА 5: Разделы V-VI -->
             <div class="page hidden" data-page="4">
+                <div class="page-tabs">
+                    <div class="page-tab" onclick="flipToPage(0)"><span class="page-tab-text">I. Общие</span></div>
+                    <div class="page-tab" onclick="flipToPage(1)"><span class="page-tab-text">II. Дисциплина</span></div>
+                    <div class="page-tab" onclick="flipToPage(2)"><span class="page-tab-text">III. Запреты</span></div>
+                    <div class="page-tab" onclick="flipToPage(3)"><span class="page-tab-text">IV. Санкции</span></div>
+                    <div class="page-tab active" onclick="flipToPage(4)"><span class="page-tab-text">V-VI. Права</span></div>
+                    <div class="page-tab" onclick="flipToPage(5)"><span class="page-tab-text">VII-VIII. Власть</span></div>
+                    <div class="page-tab" onclick="flipToPage(6)"><span class="page-tab-text">IX-X. Журнал</span></div>
+                    <div class="page-tab" onclick="flipToPage(7)"><span class="page-tab-text">Приложение</span></div>
+                </div>
+
                 <h2>Раздел V. Обязанности участников</h2>
                 <ul>
                     <li>Соблюдать настоящий устав</li>
@@ -501,6 +551,17 @@
 
             <!-- СТРАНИЦА 6: Разделы VII-VIII -->
             <div class="page hidden" data-page="5">
+                <div class="page-tabs">
+                    <div class="page-tab" onclick="flipToPage(0)"><span class="page-tab-text">I. Общие</span></div>
+                    <div class="page-tab" onclick="flipToPage(1)"><span class="page-tab-text">II. Дисциплина</span></div>
+                    <div class="page-tab" onclick="flipToPage(2)"><span class="page-tab-text">III. Запреты</span></div>
+                    <div class="page-tab" onclick="flipToPage(3)"><span class="page-tab-text">IV. Санкции</span></div>
+                    <div class="page-tab" onclick="flipToPage(4)"><span class="page-tab-text">V-VI. Права</span></div>
+                    <div class="page-tab active" onclick="flipToPage(5)"><span class="page-tab-text">VII-VIII. Власть</span></div>
+                    <div class="page-tab" onclick="flipToPage(6)"><span class="page-tab-text">IX-X. Журнал</span></div>
+                    <div class="page-tab" onclick="flipToPage(7)"><span class="page-tab-text">Приложение</span></div>
+                </div>
+
                 <h2>Раздел VII. Роль Главного Конструктора</h2>
                 <ul>
                     <li>Принимает окончательное решение по пуску</li>
@@ -522,6 +583,17 @@
 
             <!-- СТРАНИЦА 7: Разделы IX-X -->
             <div class="page hidden" data-page="6">
+                <div class="page-tabs">
+                    <div class="page-tab" onclick="flipToPage(0)"><span class="page-tab-text">I. Общие</span></div>
+                    <div class="page-tab" onclick="flipToPage(1)"><span class="page-tab-text">II. Дисциплина</span></div>
+                    <div class="page-tab" onclick="flipToPage(2)"><span class="page-tab-text">III. Запреты</span></div>
+                    <div class="page-tab" onclick="flipToPage(3)"><span class="page-tab-text">IV. Санкции</span></div>
+                    <div class="page-tab" onclick="flipToPage(4)"><span class="page-tab-text">V-VI. Права</span></div>
+                    <div class="page-tab" onclick="flipToPage(5)"><span class="page-tab-text">VII-VIII. Власть</span></div>
+                    <div class="page-tab active" onclick="flipToPage(6)"><span class="page-tab-text">IX-X. Журнал</span></div>
+                    <div class="page-tab" onclick="flipToPage(7)"><span class="page-tab-text">Приложение</span></div>
+                </div>
+
                 <h2>Раздел IX. Разборы и журнал</h2>
                 <ul>
                     <li>После каждой смены — короткий разбор: что делали, что вышло, что нет, почему</li>
@@ -541,6 +613,17 @@
 
             <!-- СТРАНИЦА 8: Приложение -->
             <div class="page hidden" data-page="7">
+                <div class="page-tabs">
+                    <div class="page-tab" onclick="flipToPage(0)"><span class="page-tab-text">I. Общие</span></div>
+                    <div class="page-tab" onclick="flipToPage(1)"><span class="page-tab-text">II. Дисциплина</span></div>
+                    <div class="page-tab" onclick="flipToPage(2)"><span class="page-tab-text">III. Запреты</span></div>
+                    <div class="page-tab" onclick="flipToPage(3)"><span class="page-tab-text">IV. Санкции</span></div>
+                    <div class="page-tab" onclick="flipToPage(4)"><span class="page-tab-text">V-VI. Права</span></div>
+                    <div class="page-tab" onclick="flipToPage(5)"><span class="page-tab-text">VII-VIII. Власть</span></div>
+                    <div class="page-tab" onclick="flipToPage(6)"><span class="page-tab-text">IX-X. Журнал</span></div>
+                    <div class="page-tab active" onclick="flipToPage(7)"><span class="page-tab-text">Приложение</span></div>
+                </div>
+
                 <h2>Приложение. Формулировки для закрепа</h2>
                 <ol>
                     <li>Инженерия — это дисциплина, а не талант</li>
@@ -559,52 +642,21 @@
             </div>
         </div>
 
-        <!-- ЗАКЛАДКИ -->
-        <div class="tabs">
-            <div class="tab active" onclick="flipToPage(0)">
-                <span class="tab-text">I. Общие</span>
-            </div>
-            <div class="tab" onclick="flipToPage(1)">
-                <span class="tab-text">II. Дисциплина</span>
-            </div>
-            <div class="tab" onclick="flipToPage(2)">
-                <span class="tab-text">III. Запреты</span>
-            </div>
-            <div class="tab" onclick="flipToPage(3)">
-                <span class="tab-text">IV. Санкции</span>
-            </div>
-            <div class="tab" onclick="flipToPage(4)">
-                <span class="tab-text">V-VI. Права</span>
-            </div>
-            <div class="tab" onclick="flipToPage(5)">
-                <span class="tab-text">VII-VIII. Власть</span>
-            </div>
-            <div class="tab" onclick="flipToPage(6)">
-                <span class="tab-text">IX-X. Журнал</span>
-            </div>
-            <div class="tab" onclick="flipToPage(7)">
-                <span class="tab-text">Приложение</span>
-            </div>
-        </div>
-
         <div class="nav-hint">Кликни по закладке справа →</div>
     </div>
 
     <script>
         let currentPage = 0;
         const pages = document.querySelectorAll('.page');
-        const tabs = document.querySelectorAll('.tab');
 
         function flipToPage(pageNum) {
             if (pageNum === currentPage) return;
 
             pages[currentPage].classList.remove('active');
             pages[currentPage].classList.add('hidden');
-            tabs[currentPage].classList.remove('active');
 
             pages[pageNum].classList.remove('hidden');
             pages[pageNum].classList.add('active');
-            tabs[pageNum].classList.add('active');
 
             currentPage = pageNum;
         }
